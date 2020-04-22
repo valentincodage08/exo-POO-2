@@ -1,0 +1,1 @@
+<?php echo "YES tout est ok tu es connecté"; ?>

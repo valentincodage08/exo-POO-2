@@ -1,5 +1,5 @@
 <?php
-
+require_once('class_database.php');
 class User {
 
     private $_username;
@@ -17,12 +17,22 @@ class User {
 
     // Fonction permettant de se connecter à la table user
     public function connectUser($bdd) {
-        $username = $this->_username;
-        $password = $this->_password;
-        $connectuser = $bdd->prepare("SELECT * FROM User WHERE username = '$username' AND password = '$password'");
-        $connectuser->execute();
-        return $connectuser->fetch();
-        $connectuser->closeCursor();
+        $req = $bdd->prepare("SELECT * FROM User WHERE username = :username AND password = :password");
+        $req->execute(array(
+                ':username' => $this->_username,
+                ':password' => $this->_password
+        ));
+        
+        $count = $req->rowCount();
+        if($count > 0)  {
+            session_start();
+            $_SESSION['username'] = $this->_username;
+            header('location:good.php');
+        }
+        else
+        {
+        header('location:mdpincorrect.php');
+        }
     }
 
     public function getUsername() {
