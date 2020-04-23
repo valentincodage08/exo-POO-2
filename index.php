@@ -11,7 +11,7 @@ if(isset($_SESSION['username'])) {
   echo "Salut, ".$_SESSION['username']."!";
 } ?>
   <form action="connexiontraitement.php" method="POST">
-    <input type="text" name="username" placeholder="Nom d'utilisateur">
+    <input type="email" name="username" placeholder="Email">
     <input type="password" name="password" placeholder="Mot de passe">
     <button value="submit">Valider</button>
   </form>
