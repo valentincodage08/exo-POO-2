@@ -1,5 +1,6 @@
 <?php
 require_once('class_database.php');
+session_start();
 class User {
 
     private $_username;
@@ -17,7 +18,7 @@ class User {
 
     // Fonction permettant de se connecter à la table user
     public function connectUser($bdd) {
-        $req = $bdd->prepare("SELECT * FROM User WHERE username = :username AND password = :password");
+        $req = $bdd->prepare("SELECT * FROM UserPOO WHERE username = :username AND password = :password");
         $req->execute(array(
                 ':username' => $this->_username,
                 ':password' => $this->_password
@@ -27,12 +28,24 @@ class User {
         if($count > 0)  {
             session_start();
             $_SESSION['username'] = $this->_username;
-            header('location:good.php');
+            header('Location:good.php');
         }
         else
         {
-        header('location:mdpincorrect.php');
+        header('Location:mdpincorrect.php');
         }
+        $req->closeCursor();
+    }
+
+    public function addUser($bdd) {
+        $req = $bdd->prepare("INSERT INTO UserPOO (username, password)
+                              VALUES (:username, :password)");
+        $req->execute(array(
+                ':username' => $this->_username,
+                ':password' => $this->_password
+        ));
+        $req->closeCursor();
+        header('location: inscrit.php');
     }
 
     public function getUsername() {

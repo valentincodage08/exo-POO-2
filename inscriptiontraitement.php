@@ -8,7 +8,7 @@ $bdd = $connexion->PDOConnexion();
 $username = !empty($_POST['username']) ? $_POST['username'] : NULL;
 $password = !empty($_POST['password']) ? $_POST['password'] : NULL;
 
-$user = new User($username, $password);
-$user->connectUser($bdd);
+$newuser = new User($username, $password);
+$newuser->addUser($bdd);
 
 ?>
