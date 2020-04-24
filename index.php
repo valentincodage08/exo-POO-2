@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +7,16 @@
   <title>Document</title>
 </head>
 <body>
-<?php session_start();
+<?php 
 if(isset($_SESSION['username'])) {
   echo "Salut, ".$_SESSION['username']."!";
+  echo "<a href='deconnexion.php'>Se déconnecter</a>";
+} ?>
+<?php if($_GET['success']==2) {
+  echo "Y'a une couille dans le paté mec";
+} 
+elseif($_GET['success']==1) {
+  echo "Ton mail a bien été confirmé";
 } ?>
   <form action="connexiontraitement.php" method="POST">
     <input type="email" name="username" placeholder="Email">

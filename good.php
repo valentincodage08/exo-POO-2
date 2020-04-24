@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <?php session_start(); ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,8 +8,7 @@
 </head>
 <body>
     <div style="height: 200px;"></div>
-<?php echo "<br><br><p>YES tout est ok tu es connecté</p><br><a href='index.php'>Retour à l'accueil</a>";
-echo $_SESSION['username']; ?>
+<?php echo "<br><br><p>YES tout est ok tu es connecté</p><br><a href='index.php'>Retour à l'accueil</a>"; ?>
 <div style="height: 200px;"></div>
 </body>
 </html>

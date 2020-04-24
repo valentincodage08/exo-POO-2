@@ -1,10 +1,11 @@
 <?php
-require_once('class_database.php');
 session_start();
+require_once('class_database.php');
 class User {
 
     private $_username;
     private $_password;
+    private $_token;
 
     public function __construct($_username, $_password) {
         $this->_username = $_username;
@@ -38,19 +39,16 @@ class User {
     }
 
     public function addUser($bdd) {
-        $req = $bdd->prepare("INSERT INTO UserPOO (username, password)
-                              VALUES (:username, :password)");
+        $req = $bdd->prepare("INSERT INTO UserPOO (username, password, token, confirmed)
+                              VALUES (:username, :password, :token, 0)");
         $req->execute(array(
                 ':username' => $this->_username,
-                ':password' => $this->_password
+                ':password' => $this->_password,
+                ':token' => $token = substr(str_shuffle(str_repeat("0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN", 32)), 0, 32)
         ));
         $req->closeCursor();
+        mail($this->_username, "Veuillez confirmer votre mail", "Veuillez confirmer votre mail en cliquant ici : http://demandat.simplon-charleville.fr/exo-POO-2/confirm.php?token=$token");
         header('location: inscrit.php');
-    }
-
-    public function str_random($length){
-        $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
-        return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length);
     }
 
     public function getUsername() {
